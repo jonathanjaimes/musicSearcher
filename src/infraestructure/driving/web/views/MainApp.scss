@@ -1,0 +1,17 @@
+@use "sass:color";
+@use '../styles/variables' as *;
+
+.main-app {
+  min-height: 100vh;
+  background-color: $bg-color;
+  color: $text-color;
+  font-family: 'Spotify Circular', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  .main-content {
+    // Remove padding since child components handle their own spacing
+    padding: 0;
+    
+    // Ensure content takes full height minus nav
+    min-height: calc(100vh - 70px);
+  }
+}

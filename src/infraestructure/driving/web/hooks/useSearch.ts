@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback } from "react";
 import type { Song } from "../../../../core/search/domain/models/song";
 import { SearchSongService } from "../../../../core/search/application/search-song.service";
 import { SpotifySongRepository } from "../../../../infraestructure/driven/spotify/spotify-song.repository";
@@ -24,8 +24,10 @@ export const useSearch = () => {
 
     try {
       const songs = await searchSongService.search(query);
+      console.log(songs, "SONGS");
       setSongs(songs);
     } catch (error: any) {
+      console.log(error);
       setError(error.message || "Error al buscar canciones");
       setSongs([]);
     } finally {

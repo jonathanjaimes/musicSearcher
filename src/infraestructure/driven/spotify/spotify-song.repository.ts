@@ -12,7 +12,7 @@ export class SpotifySongRepository implements SongRepository {
   async searchSongs(query: string): Promise<Song[]> {
     const spotifyTracks = await this.spotifyClient.searchTracks(query);
 
-    const songs: Song[] = spotifyTracks.items.map((track: any) => ({
+    const songs: Song[] = spotifyTracks.map((track: any) => ({
       id: track.id,
       title: track.name,
       artist: track.artists.map((artist: any) => artist.name).join(", "),

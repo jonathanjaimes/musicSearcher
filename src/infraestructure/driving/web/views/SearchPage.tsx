@@ -1,7 +1,61 @@
 import React from "react";
+import { useSearch } from "../hooks/useSearch";
+import { usePlaylist } from "../hooks/usePlaylist";
+import { useSearchForm } from "../hooks/useSearchForm";
+import { usePlaylistModal } from "../hooks/usePlaylistModal";
+import { usePlaylistActions } from "../hooks/usePlaylistActions";
+import SearchForm from "../components/SearchForm";
+import SearchResults from "../components/SearchResults";
+import PlaylistModal from "../components/PlaylistModal";
+import "./SearchPage.scss";
 
 const SearchPage: React.FC = () => {
-  return <div>SearchPage</div>;
+  // Custom hooks
+  const { songs, performSearch, loading, error } = useSearch();
+  const {
+    playlists,
+    loading: playlistLoading,
+    createPlaylist,
+    addSongToPlaylist,
+  } = usePlaylist();
+  const { searchTerm, setSearchTerm, handleSubmit, handleRetrySearch } =
+    useSearchForm(performSearch);
+  const { isModalOpen, selectedSong, openModal, closeModal } =
+    usePlaylistModal();
+  const { handleCreatePlaylist, handleAddSongToPlaylist } = usePlaylistActions(
+    createPlaylist,
+    addSongToPlaylist
+  );
+
+  return (
+    <div className="search-page">
+      <SearchForm
+        searchTerm={searchTerm}
+        onSearchTermChange={setSearchTerm}
+        onSubmit={handleSubmit}
+        isLoading={loading}
+      />
+
+      <SearchResults
+        songs={songs}
+        loading={loading}
+        error={error}
+        searchTerm={searchTerm}
+        onAddToPlaylist={openModal}
+        onRetry={handleRetrySearch}
+      />
+
+      <PlaylistModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        song={selectedSong}
+        playlists={playlists}
+        onCreatePlaylist={handleCreatePlaylist}
+        onAddSongToPlaylist={handleAddSongToPlaylist}
+        isLoading={playlistLoading}
+      />
+    </div>
+  );
 };
 
 export default SearchPage;

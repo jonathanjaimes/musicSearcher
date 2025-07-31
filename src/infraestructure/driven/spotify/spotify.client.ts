@@ -1,5 +1,5 @@
-const SPOTIFY_CLIENT_ID = "";
-const SPOTIFY_CLIENT_SECRET = "";
+const SPOTIFY_CLIENT_ID = "61e7c2cc7312413eace05c8711413fc9";
+const SPOTIFY_CLIENT_SECRET = "2b1e43341d34432d972f05ccb7776a2e";
 
 export class SpotifyClient {
   private authToken: string | null = null;
@@ -13,13 +13,12 @@ export class SpotifyClient {
     const response = await fetch("https://accounts.spotify.com/api/token", {
       method: "POST",
       headers: {
-        Authorization: `Basic ${btoa(
-          `${SPOTIFY_CLIENT_ID}:${SPOTIFY_CLIENT_SECRET}`
-        )}`,
         "Content-Type": "application/x-www-form-urlencoded",
       },
       body: new URLSearchParams({
         grant_type: "client_credentials",
+        client_id: SPOTIFY_CLIENT_ID,
+        client_secret: SPOTIFY_CLIENT_SECRET,
       }),
     });
 

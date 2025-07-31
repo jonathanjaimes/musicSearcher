@@ -1,4 +1,5 @@
-import { FirebaseApp, initializeApp } from "firebase/app";
+import type { FirebaseApp } from "firebase/app";
+import { initializeApp } from "firebase/app";
 import {
   addDoc,
   arrayUnion,
@@ -18,12 +19,13 @@ import type { Playlist } from "../../../core/playlist/domain/models/playlist";
 import type { Song } from "../../../core/search/domain/models/song";
 
 const firebaseConfig = {
-  apiKey: "TU_API_KEY",
-  authDomain: "TU_AUTH_DOMAIN",
-  projectId: "TU_PROJECT_ID",
-  storageBucket: "TU_STORAGE_BUCKET",
-  messagingSenderId: "TU_MESSAGING_SENDER_ID",
-  appId: "TU_APP_ID",
+  apiKey: "AIzaSyBTkENf0gEuMdU9H8wjd6D0PAqRuLCZLR4",
+  authDomain: "music-searcher-12a48.firebaseapp.com",
+  projectId: "music-searcher-12a48",
+  storageBucket: "music-searcher-12a48.firebasestorage.app",
+  messagingSenderId: "83307062873",
+  appId: "1:83307062873:web:9db8b812522d0ed00fb348",
+  measurementId: "G-YPWYMLPLGV",
 };
 
 export class FirebaseClient {
@@ -40,14 +42,19 @@ export class FirebaseClient {
   private docToPlaylist(doc: DocumentData): Playlist {
     return {
       id: doc.id,
-      name: doc.name,
-      songs: doc.songs,
+      name: doc.name || "",
+      songs: doc.songs || [],
     };
   }
 
   async getPlaylist(): Promise<Playlist[]> {
     const snapshot = await getDocs(this.playlistCollection);
-    return snapshot.docs.map(this.docToPlaylist);
+    return snapshot.docs.map((doc) =>
+      this.docToPlaylist({
+        id: doc.id,
+        ...doc.data(),
+      })
+    );
   }
 
   async getPlaylistById(id: string): Promise<Playlist | null> {
@@ -55,7 +62,10 @@ export class FirebaseClient {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      return this.docToPlaylist(docSnap);
+      return this.docToPlaylist({
+        id: docSnap.id,
+        ...docSnap.data(),
+      });
     }
 
     return null;
@@ -79,15 +89,31 @@ export class FirebaseClient {
     songId: string
   ): Promise<Playlist> {
     const docRef = doc(this.db, "playlists", playlistId);
-    await updateDoc(docRef, {
-      songs: arrayRemove(songId),
-    });
 
-    const updatePlaylist = await this.getPlaylistById(playlistId);
-    if (!updatePlaylist) {
+    // Primero obtenemos la playlist para encontrar la canción completa
+    const currentPlaylist = await this.getPlaylistById(playlistId);
+    if (!currentPlaylist) {
       throw new Error("Playlist no encontrada");
     }
-    return updatePlaylist;
+
+    // Encontramos la canción que queremos eliminar
+    const songToRemove = currentPlaylist.songs.find(
+      (song) => song.id === songId
+    );
+    if (!songToRemove) {
+      throw new Error("Canción no encontrada en la playlist");
+    }
+
+    // Usamos arrayRemove con el objeto completo de la canción
+    await updateDoc(docRef, {
+      songs: arrayRemove(songToRemove),
+    });
+
+    const updatedPlaylist = await this.getPlaylistById(playlistId);
+    if (!updatedPlaylist) {
+      throw new Error("Playlist no encontrada");
+    }
+    return updatedPlaylist;
   }
 
   async deletePlaylist(id: string): Promise<void> {
