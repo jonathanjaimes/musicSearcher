@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import type { Playlist } from "../../../../../core/playlist/domain/models/playlist";
+
 import {
   mockPlaylist,
   createMockPlaylist,

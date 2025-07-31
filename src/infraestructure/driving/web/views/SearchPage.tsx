@@ -40,7 +40,6 @@ const SearchPage: React.FC = () => {
         playlists={playlists}
         loading={loading}
         error={error}
-        searchTerm={searchTerm}
         onAddToPlaylist={openModal}
         onRetry={handleRetrySearch}
       />

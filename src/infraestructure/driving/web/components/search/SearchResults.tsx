@@ -14,7 +14,7 @@ interface SearchResultsProps {
   playlists: Playlist[];
   loading: boolean;
   error: string | null;
-  searchTerm: string;
+
   onAddToPlaylist: (song: Song) => void;
   onRetry?: () => void;
 }
@@ -24,7 +24,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({
   playlists,
   loading,
   error,
-  searchTerm,
+
   onAddToPlaylist,
   onRetry,
 }) => {
