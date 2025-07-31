@@ -2,13 +2,7 @@
 
 Music Searcher es una aplicación web moderna construida con React, TypeScript y Vite, que utiliza la API de Spotify para buscar canciones y gestionar playlists personalizadas. El proyecto está diseñado siguiendo los principios de la **Arquitectura Hexagonal (Puertos y Adaptadores)** para garantizar una separación clara de la lógica de negocio, alta mantenibilidad y escalabilidad.
 
-## Demo
-
-_(Aquí puedes insertar un GIF que muestre la aplicación en funcionamiento)_
-
-![Demo de Music Searcher](URL_DEL_GIF_AQUI)
-
-## ✨ Características Principales
+## Características Principales
 
 - **Búsqueda de Canciones**: Busca canciones en tiempo real utilizando la API de Spotify.
 - **Gestión de Playlists**: Crea, visualiza y elimina playlists.
@@ -20,7 +14,7 @@ _(Aquí puedes insertar un GIF que muestre la aplicación en funcionamiento)_
 - **Estados Claros**: Componentes reutilizables para los estados de carga, error (con opción de reintentar) y vacío.
 - **Modales Interactivos**: Experiencia de usuario mejorada con modales para crear playlists y agregar canciones.
 
-## 🏛️ Arquitectura del Proyecto: Arquitectura Hexagonal
+## Arquitectura del Proyecto: Arquitectura Hexagonal
 
 El proyecto sigue una **Arquitectura Hexagonal** (también conocida como de Puertos y Adaptadores) para separar la lógica de negocio (`core`) de las dependencias externas (`infrastructure`).
 
@@ -61,14 +55,14 @@ Contiene las implementaciones tecnológicas y todo lo que interactúa con el mun
 
 Este enfoque permite que el `core` sea completamente independiente y testeable, y facilita el cambio de tecnologías (por ejemplo, cambiar Firebase por otro servicio de base de datos) sin afectar la lógica de negocio.
 
-## 🎨 Patrones de Diseño y Principios
+## Patrones de Diseño y Principios
 
 - **Custom Hooks**: Se utilizan para encapsular y reutilizar lógica de estado y efectos secundarios. Ejemplos: `usePlaylist`, `usePagination`, `useSearchForm`. Esto mantiene los componentes limpios y centrados en la UI.
 - **Componentes de Presentación y Contenedor**: Las vistas (`SearchPage`, `MyPlaylistPage`) actúan como **contenedores** que orquestan los hooks y los componentes de presentación. Los componentes más pequeños (`SongCard`, `PlaylistGrid`, `Pagination`) son **presentacionales**, reciben datos y funciones vía props y no contienen lógica de negocio.
 - **Inversión de Dependencias**: El `core` no depende de la `infrastructure`, sino al revés. El `core` define interfaces (puertos) y la `infrastructure` las implementa, siguiendo el Principio de Inversión de Dependencias (DIP).
 - **Estilos Modulares con SASS**: Cada componente tiene su propio archivo `.scss`, y se utilizan variables centralizadas para mantener la consistencia visual y facilitar el mantenimiento del tema.
 
-## 📁 Estructura de Carpetas
+## Estructura de Carpetas
 
 ```
 /src
@@ -92,7 +86,7 @@ Este enfoque permite que el `core` sea completamente independiente y testeable, 
 └── tests/                    # Tests unitarios y de integración
 ```
 
-## 🚀 Stack Tecnológico
+## Stack Tecnológico
 
 - **Framework**: [React](https://reactjs.org/) 18+
 - **Lenguaje**: [TypeScript](https://www.typescriptlang.org/)
@@ -103,7 +97,7 @@ Este enfoque permite que el `core` sea completamente independiente y testeable, 
   - **Base de Datos**: [Firebase (Firestore)](https://firebase.google.com/)
 - **Testing**: [Vitest](https://vitest.dev/) y [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
 
-## 🛠️ Cómo Empezar
+## Cómo Empezar
 
 Sigue estos pasos para configurar y ejecutar el proyecto en tu máquina local.
 
@@ -146,7 +140,7 @@ Luego edita el archivo `.env` con tus credenciales reales:
 VITE_SPOTIFY_CLIENT_ID=tu_spotify_client_id_aqui
 VITE_SPOTIFY_CLIENT_SECRET=tu_spotify_client_secret_aqui
 
-# Firebase Configuration  
+# Firebase Configuration
 # Obtén estas credenciales en: https://console.firebase.google.com/
 VITE_FIREBASE_API_KEY=tu_firebase_api_key_aqui
 VITE_FIREBASE_AUTH_DOMAIN=tu_project_id.firebaseapp.com
@@ -160,18 +154,20 @@ VITE_FIREBASE_MEASUREMENT_ID=tu_measurement_id_aqui
 #### Cómo obtener las credenciales:
 
 **Spotify API:**
+
 1. Ve a [Spotify Developer Dashboard](https://developer.spotify.com/dashboard)
 2. Crea una nueva aplicación
 3. Copia el `Client ID` y `Client Secret`
 
 **Firebase:**
+
 1. Ve a [Firebase Console](https://console.firebase.google.com/)
 2. Crea un nuevo proyecto o selecciona uno existente
 3. Ve a Configuración del proyecto > General
 4. En "Tus aplicaciones", agrega una aplicación web
 5. Copia la configuración que aparece
 
-> ⚠️ **Importante**: Nunca subas el archivo `.env` a tu repositorio. Ya está incluido en `.gitignore` para proteger tus credenciales.
+> **Importante**: Nunca subas el archivo `.env` a tu repositorio. Ya está incluido en `.gitignore` para proteger tus credenciales.
 
 ### 4. Ejecutar la Aplicación
 
@@ -185,7 +181,7 @@ yarn dev
 
 La aplicación estará disponible en `http://localhost:5173` (o el puerto que Vite asigne).
 
-## 📜 Scripts Disponibles
+## Scripts Disponibles
 
 - `npm run dev`: Inicia el servidor de desarrollo con Hot-Reload.
 - `npm run build`: Compila la aplicación para producción en la carpeta `dist/`.
