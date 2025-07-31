@@ -18,7 +18,7 @@ const PlaylistForm: React.FC<PlaylistFormProps> = ({
 }) => {
   return (
     <div className="create-form-container">
-      <form className="create-playlist-form" onSubmit={onSubmit}>
+      <form className="create-playlist-form" onSubmit={onSubmit} role="form">
         <input
           type="text"
           placeholder="Nombre de la nueva lista"

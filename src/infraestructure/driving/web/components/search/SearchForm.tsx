@@ -16,7 +16,7 @@ const SearchForm: React.FC<SearchFormProps> = ({
 }) => {
   return (
     <div className="search-container">
-      <form className="search-form" onSubmit={onSubmit}>
+      <form className="search-form" onSubmit={onSubmit} role="form">
         <input
           type="text"
           className="search-input"

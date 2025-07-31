@@ -15,9 +15,13 @@ const DeletePlaylistModal: React.FC<DeletePlaylistModalProps> = ({
   onCancel,
   onOverlayClick,
 }) => {
+  const handleContentClick = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent event from bubbling to overlay
+  };
+
   return (
     <div className="modal-overlay" onClick={onOverlayClick}>
-      <div className="modal-content">
+      <div className="modal-content" onClick={handleContentClick}>
         <h2>Eliminar lista de reproducción</h2>
         <p>¿Estás seguro de que quieres eliminar la lista "{playlist.name}"?</p>
         <div className="modal-actions">

@@ -23,9 +23,10 @@ export const usePlaylistForm = (
     setIsCreating(true);
     try {
       await onCreatePlaylist(newPlaylistName.trim());
-      closeForm();
+      closeForm(); // Only close form on success
     } catch (error) {
       console.error("Error creating playlist:", error);
+      // Don't close form on error - keep it open so user can retry
     } finally {
       setIsCreating(false);
     }
