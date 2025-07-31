@@ -1,0 +1,254 @@
+@use "sass:color";
+@use '../../styles/variables' as *;
+
+.playlist-detail {
+  max-width: 1200px;
+  margin: 0 auto;
+  color: $text-color;
+
+  .playlist-header {
+    margin-bottom: 2rem;
+
+    .back-button {
+      background: none;
+      border: none;
+      color: $text-secondary;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: $text-color;
+      }
+    }
+
+    .playlist-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin: 0;
+        color: $text-color;
+      }
+
+      .song-count {
+        color: $text-secondary;
+        font-size: 0.9rem;
+        margin: 0;
+      }
+    }
+  }
+
+  .empty-playlist {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: $text-secondary;
+
+    h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: $text-color;
+    }
+
+    p {
+      font-size: 1rem;
+      margin: 0;
+    }
+  }
+
+  .songs-list {
+    .song-item {
+      display: flex;
+      align-items: center;
+      padding: 1rem;
+      border-radius: $border-radius;
+      transition: background-color 0.2s ease;
+      gap: 1rem;
+
+      &:hover {
+        background-color: color.adjust($card-bg, $lightness: 5%);
+
+        .remove-button {
+          opacity: 1;
+        }
+      }
+
+      .song-number {
+        width: 2rem;
+        text-align: center;
+        color: $text-secondary;
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
+
+      .song-info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        flex: 1;
+
+        .song-image {
+          width: 50px;
+          height: 50px;
+          border-radius: 4px;
+          object-fit: cover;
+        }
+
+        .song-details {
+          flex: 1;
+
+          .song-title {
+            font-size: 1rem;
+            font-weight: 500;
+            margin: 0 0 0.25rem 0;
+            color: $text-color;
+          }
+
+          .song-artist {
+            font-size: 0.9rem;
+            color: $text-secondary;
+            margin: 0 0 0.25rem 0;
+          }
+
+          .song-album {
+            font-size: 0.8rem;
+            color: $text-muted;
+            margin: 0;
+          }
+        }
+      }
+
+      .remove-button {
+        background: none;
+        border: none;
+        color: $text-secondary;
+        font-size: 1.5rem;
+        cursor: pointer;
+        opacity: 0;
+        transition: all 0.2s ease;
+        padding: 0.5rem;
+        border-radius: 50%;
+        width: 2.5rem;
+        height: 2.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+          color: #ff6b6b;
+          background-color: rgba(255, 107, 107, 0.1);
+        }
+
+        &.removing {
+          opacity: 1;
+          color: $primary-color;
+        }
+
+        &:disabled {
+          cursor: not-allowed;
+          opacity: 0.6;
+        }
+      }
+    }
+  }
+}
+
+// Responsive
+@media (max-width: $tablet) {
+  .playlist-detail {
+    padding: 0 1rem;
+
+    .playlist-header {
+      .playlist-info {
+        h1 {
+          font-size: 2rem;
+        }
+      }
+    }
+
+    .songs-list {
+      .song-item {
+        padding: 0.75rem;
+        gap: 0.75rem;
+
+        .song-info {
+          .song-image {
+            width: 40px;
+            height: 40px;
+          }
+
+          .song-details {
+            .song-title {
+              font-size: 0.9rem;
+            }
+
+            .song-artist {
+              font-size: 0.8rem;
+            }
+
+            .song-album {
+              display: none;
+            }
+          }
+        }
+
+        .remove-button {
+          opacity: 1;
+          font-size: 1.25rem;
+          width: 2rem;
+          height: 2rem;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: $mobile) {
+  .playlist-detail {
+    .playlist-header {
+      .playlist-info {
+        h1 {
+          font-size: 1.75rem;
+        }
+      }
+    }
+
+    .songs-list {
+      .song-item {
+        padding: 0.5rem;
+        gap: 0.5rem;
+
+        .song-number {
+          width: 1.5rem;
+          font-size: 0.8rem;
+        }
+
+        .song-info {
+          gap: 0.75rem;
+
+          .song-image {
+            width: 35px;
+            height: 35px;
+          }
+
+          .song-details {
+            .song-title {
+              font-size: 0.85rem;
+            }
+
+            .song-artist {
+              font-size: 0.75rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}

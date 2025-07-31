@@ -2,7 +2,8 @@
 
 .search-page {
   padding: 2rem;
-  min-height: 100vh;
+  // Removido min-height: 100vh para evitar scroll innecesario
+  // cuando no hay resultados de búsqueda
   background-color: $bg-color;
 
   @media (max-width: 768px) {

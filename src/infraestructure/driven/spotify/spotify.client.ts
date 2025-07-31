@@ -41,7 +41,7 @@ export class SpotifyClient {
     const searchParams = new URLSearchParams({
       q: query,
       type: "track",
-      limit: "20",
+      limit: "40",
     });
 
     const response = await fetch(

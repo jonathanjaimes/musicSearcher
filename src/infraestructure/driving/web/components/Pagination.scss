@@ -1,0 +1,129 @@
+@use '../styles/variables' as *;
+@use 'sass:color';
+
+.pagination {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding: 1.5rem 0;
+  border-top: 1px solid $border-color;
+
+  .pagination-info {
+    text-align: center;
+    color: $text-secondary;
+    font-size: 0.9rem;
+  }
+
+  .pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .pagination-numbers {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .pagination-btn {
+    background-color: transparent;
+    color: $text-secondary;
+    border: 1px solid $border-color;
+    border-radius: $border-radius;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover:not(:disabled) {
+      background-color: color.adjust($primary-color, $alpha: -0.9);
+      border-color: $primary-color;
+      color: $primary-color;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      color: $text-muted;
+    }
+
+    &--nav {
+      font-size: 1.1rem;
+      font-weight: bold;
+    }
+
+    &--number {
+      font-weight: 500;
+    }
+
+    &--active {
+      background-color: $primary-color;
+      border-color: $primary-color;
+      color: $secondary-color;
+      font-weight: 600;
+
+      &:hover {
+        background-color: color.adjust($primary-color, $lightness: 10%);
+        border-color: color.adjust($primary-color, $lightness: 10%);
+      }
+    }
+  }
+
+  .pagination-ellipsis {
+    color: $text-muted;
+    padding: 0.5rem 0.25rem;
+    font-size: 0.9rem;
+  }
+
+  // Responsive
+  @media (max-width: $tablet) {
+    .pagination-controls {
+      gap: 0.25rem;
+    }
+
+    .pagination-btn {
+      padding: 0.4rem 0.6rem;
+      min-width: 2.25rem;
+      height: 2.25rem;
+      font-size: 0.85rem;
+    }
+
+    .pagination-numbers {
+      gap: 0.125rem;
+    }
+  }
+
+  @media (max-width: $mobile) {
+    .pagination-info {
+      font-size: 0.8rem;
+    }
+
+    .pagination-controls {
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .pagination-numbers {
+      order: 1;
+    }
+
+    .pagination-btn--nav {
+      order: 2;
+      width: 100%;
+      max-width: 200px;
+
+      &:first-of-type {
+        order: 0;
+      }
+    }
+  }
+}

@@ -1,0 +1,344 @@
+@use "sass:color";
+@use '../../styles/variables' as *;
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-out;
+
+  .modal-content {
+    background-color: $card-bg;
+    border-radius: $border-radius-large;
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: $box-shadow;
+    animation: slideIn 0.3s ease-out;
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 1.5rem 0 1.5rem;
+      border-bottom: 1px solid $border-color;
+      margin-bottom: 1.5rem;
+
+      h2 {
+        color: $text-color;
+        margin: 0;
+        font-size: 1.25rem;
+        font-weight: 600;
+      }
+
+      .close-button {
+        background: none;
+        border: none;
+        color: $text-secondary;
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 0.25rem;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+
+        &:hover {
+          color: $text-color;
+          background-color: rgba(255, 255, 255, 0.1);
+        }
+      }
+    }
+
+    .song-preview {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0 1.5rem;
+      margin-bottom: 1.5rem;
+
+      .song-image {
+        width: 60px;
+        height: 60px;
+        border-radius: 4px;
+        object-fit: cover;
+      }
+
+      .song-info {
+        flex: 1;
+
+        h3 {
+          color: $text-color;
+          margin: 0 0 0.25rem 0;
+          font-size: 1rem;
+          font-weight: 500;
+        }
+
+        p {
+          color: $text-secondary;
+          margin: 0;
+          font-size: 0.9rem;
+        }
+      }
+    }
+
+    .error-message {
+      background-color: rgba(255, 107, 107, 0.1);
+      border: 1px solid #ff6b6b;
+      color: #ff6b6b;
+      padding: 0.75rem;
+      border-radius: 4px;
+      margin: 0 1.5rem 1.5rem 1.5rem;
+      font-size: 0.9rem;
+    }
+
+    .modal-body {
+      padding: 0 1.5rem 1.5rem 1.5rem;
+
+      .playlists-section {
+        margin-bottom: 1.5rem;
+
+        h3 {
+          color: $text-color;
+          margin: 0 0 1rem 0;
+          font-size: 1rem;
+          font-weight: 500;
+        }
+
+        .playlists-list {
+          max-height: 200px;
+          overflow-y: auto;
+          border: 1px solid $border-color;
+          border-radius: 4px;
+
+          .playlist-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            border-bottom: 1px solid $border-color;
+
+            &:last-child {
+              border-bottom: none;
+            }
+
+            &:hover:not(.disabled) {
+              background-color: color.adjust($card-bg, $lightness: 5%);
+            }
+
+            &.selected {
+              background-color: rgba(29, 185, 84, 0.2);
+              border-color: $primary-color;
+            }
+
+            &.disabled {
+              opacity: 0.5;
+              cursor: not-allowed;
+            }
+
+            .playlist-name {
+              color: $text-color;
+              font-weight: 500;
+              flex: 1;
+            }
+
+            .song-count {
+              color: $text-secondary;
+              font-size: 0.8rem;
+              margin-right: 0.5rem;
+            }
+
+            .already-added {
+              color: $primary-color;
+              font-size: 0.8rem;
+              font-weight: 500;
+            }
+          }
+
+          .no-playlists {
+            padding: 2rem;
+            text-align: center;
+            color: $text-secondary;
+            font-style: italic;
+            margin: 0;
+          }
+        }
+      }
+
+      .create-playlist-section {
+        h3 {
+          color: $text-color;
+          margin: 0 0 1rem 0;
+          font-size: 1rem;
+          font-weight: 500;
+        }
+
+        form {
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+
+          .playlist-name-input {
+            padding: 0.75rem;
+            background-color: color.adjust($card-bg, $lightness: 5%);
+            border: 1px solid $border-color;
+            border-radius: 4px;
+            color: $text-color;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+
+            &:focus {
+              outline: none;
+              border-color: $primary-color;
+              box-shadow: 0 0 0 2px rgba(29, 185, 84, 0.2);
+            }
+
+            &::placeholder {
+              color: $text-muted;
+            }
+          }
+
+          .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+          }
+        }
+      }
+
+      .modal-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: flex-end;
+      }
+
+      // Estilos comunes para botones
+      button {
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 4px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-size: 0.9rem;
+
+        &:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+
+        &.add-button,
+        &.create-button {
+          background-color: $primary-color;
+          color: white;
+
+          &:hover:not(:disabled) {
+            background-color: color.adjust($primary-color, $lightness: -10%);
+            transform: translateY(-1px);
+          }
+
+          &:active:not(:disabled) {
+            transform: translateY(0);
+          }
+        }
+
+        &.create-new-button,
+        &.back-button {
+          background-color: transparent;
+          color: $text-secondary;
+          border: 1px solid $border-color;
+
+          &:hover:not(:disabled) {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: $text-color;
+            border-color: #666;
+          }
+
+          &:active:not(:disabled) {
+            background-color: rgba(255, 255, 255, 0.1);
+          }
+        }
+      }
+    }
+  }
+}
+
+// Animaciones del modal
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+// Responsive
+@media (max-width: $tablet) {
+  .modal-overlay {
+    .modal-content {
+      max-width: 90%;
+      margin: 1rem;
+
+      .modal-header {
+        padding: 1rem 1rem 0 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .song-preview {
+        padding: 0 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .modal-body {
+        padding: 0 1rem 1rem 1rem;
+
+        .playlists-section {
+          .playlists-list {
+            max-height: 150px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: $mobile) {
+  .modal-overlay {
+    .modal-content {
+      max-width: 95%;
+      max-height: 90vh;
+
+      .modal-body {
+        .modal-actions,
+        .create-playlist-section .form-actions {
+          flex-direction: column;
+
+          button {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}

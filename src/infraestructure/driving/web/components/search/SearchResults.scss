@@ -1,0 +1,119 @@
+@use '../../styles/variables' as *;
+
+.search-results {
+  .results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+    gap: 1rem;
+
+    .results-info {
+      flex: 1;
+
+      h2 {
+        color: $text-color;
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin: 0 0 0.5rem 0;
+      }
+
+      p {
+        color: $text-secondary;
+        font-size: 0.9rem;
+        margin: 0;
+      }
+    }
+  }
+
+  .songs-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem 1.5rem;
+    margin-top: 1.5rem;
+
+    .song-card {
+      flex: 1 1 300px;
+      max-width: calc(50% - 0.75rem);
+    }
+  }
+
+  .no-results {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: $text-secondary;
+
+    h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: $text-color;
+    }
+
+    p {
+      font-size: 1rem;
+      margin: 0;
+    }
+  }
+}
+
+// Responsive
+@media (max-width: $tablet) {
+  .search-results {
+    .results-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+
+      .results-info {
+        h2 {
+          font-size: 1.25rem;
+        }
+
+        p {
+          font-size: 0.8rem;
+        }
+      }
+    }
+
+    .songs-grid {
+      gap: 1.5rem 1rem;
+
+      .song-card {
+        max-width: calc(50% - 0.5rem);
+      }
+    }
+  }
+}
+
+@media (max-width: $mobile) {
+  .search-results {
+    .results-header {
+      .results-info {
+        h2 {
+          font-size: 1.1rem;
+        }
+      }
+    }
+
+    .songs-grid {
+      gap: 1.5rem 0;
+
+      .song-card {
+        flex: 1 1 100%;
+        max-width: 100%;
+      }
+    }
+
+    .no-results {
+      padding: 3rem 1rem;
+
+      h3 {
+        font-size: 1.25rem;
+      }
+
+      p {
+        font-size: 0.9rem;
+      }
+    }
+  }
+}

@@ -1,207 +1,207 @@
-@use "sass:color";
-@use '../styles/variables' as *;
+// @use "sass:color";
+// @use '../styles/variables' as *;
 
-.playlist-detail {
-  max-width: 1200px;
-  margin: 0 auto;
-  color: $text-color;
+// .playlist-detail {
+//   max-width: 1200px;
+//   margin: 0 auto;
+//   color: $text-color;
 
-  .playlist-header {
-    margin-bottom: 2rem;
+//   .playlist-header {
+//     margin-bottom: 2rem;
 
-    .back-button {
-      background: none;
-      border: none;
-      color: $text-secondary;
-      font-size: 1rem;
-      cursor: pointer;
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      transition: color 0.2s ease;
+//     .back-button {
+//       background: none;
+//       border: none;
+//       color: $text-secondary;
+//       font-size: 1rem;
+//       cursor: pointer;
+//       margin-bottom: 1rem;
+//       display: flex;
+//       align-items: center;
+//       gap: 0.5rem;
+//       transition: color 0.2s ease;
 
-      &:hover {
-        color: $text-color;
-      }
-    }
+//       &:hover {
+//         color: $text-color;
+//       }
+//     }
 
-    .playlist-info {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
+//     .playlist-info {
+//       display: flex;
+//       align-items: center;
+//       gap: 1rem;
 
-      h1 {
-        font-size: 2.5rem;
-        font-weight: 700;
-        margin: 0 0 0.5rem 0;
-        color: $text-color;
-      }
+//       h1 {
+//         font-size: 2.5rem;
+//         font-weight: 700;
+//         margin: 0 0 0.5rem 0;
+//         color: $text-color;
+//       }
 
-      .song-count {
-        color: $text-secondary;
-        font-size: 1.1rem;
-        margin: 0;
-      }
-    }
-  }
+//       .song-count {
+//         color: $text-secondary;
+//         font-size: 1.1rem;
+//         margin: 0;
+//       }
+//     }
+//   }
 
-  .empty-playlist {
-    text-align: center;
-    padding: 4rem 2rem;
-    color: $text-secondary;
+//   .empty-playlist {
+//     text-align: center;
+//     padding: 4rem 2rem;
+//     color: $text-secondary;
 
-    .empty-icon {
-      font-size: 4rem;
-      margin-bottom: 1rem;
-      opacity: 0.5;
-    }
+//     .empty-icon {
+//       font-size: 4rem;
+//       margin-bottom: 1rem;
+//       opacity: 0.5;
+//     }
 
-    h3 {
-      font-size: 1.5rem;
-      margin-bottom: 0.5rem;
-      color: $text-color;
-    }
+//     h3 {
+//       font-size: 1.5rem;
+//       margin-bottom: 0.5rem;
+//       color: $text-color;
+//     }
 
-    p {
-      color: $text-secondary;
-      font-size: 1.1rem;
-    }
-  }
+//     p {
+//       color: $text-secondary;
+//       font-size: 1.1rem;
+//     }
+//   }
 
-  .songs-list {
-    .songs-header {
-      display: grid;
-      grid-template-columns: 40px 1fr auto;
-      gap: 1rem;
-      padding: 0.75rem 1rem;
-      border-bottom: 1px solid $border-color;
-      font-size: 0.9rem;
-      font-weight: 500;
-      color: $text-secondary;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
+//   .songs-list {
+//     .songs-header {
+//       display: grid;
+//       grid-template-columns: 40px 1fr auto;
+//       gap: 1rem;
+//       padding: 0.75rem 1rem;
+//       border-bottom: 1px solid $border-color;
+//       font-size: 0.9rem;
+//       font-weight: 500;
+//       color: $text-secondary;
+//       text-transform: uppercase;
+//       letter-spacing: 0.5px;
+//     }
 
-    .song-item {
-      display: grid;
-      grid-template-columns: 40px 1fr auto;
-      gap: 1rem;
-      padding: 0.75rem 1rem;
-      border-radius: $border-radius;
-      transition: background-color 0.2s ease;
+//     .song-item {
+//       display: grid;
+//       grid-template-columns: 40px 1fr auto;
+//       gap: 1rem;
+//       padding: 0.75rem 1rem;
+//       border-radius: $border-radius;
+//       transition: background-color 0.2s ease;
 
-      &:hover {
-        background-color: rgba(255, 255, 255, 0.05);
+//       &:hover {
+//         background-color: rgba(255, 255, 255, 0.05);
 
-        .remove-button {
-          opacity: 1;
-        }
-      }
+//         .remove-button {
+//           opacity: 1;
+//         }
+//       }
 
-      .song-number {
-        width: 20px;
-        text-align: center;
-        color: $text-secondary;
-        font-size: 0.9rem;
-      }
+//       .song-number {
+//         width: 20px;
+//         text-align: center;
+//         color: $text-secondary;
+//         font-size: 0.9rem;
+//       }
 
-      .song-info {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
+//       .song-info {
+//         display: flex;
+//         align-items: center;
+//         gap: 1rem;
 
-        .song-image {
-          width: 50px;
-          height: 50px;
-          border-radius: 4px;
-          object-fit: cover;
-        }
+//         .song-image {
+//           width: 50px;
+//           height: 50px;
+//           border-radius: 4px;
+//           object-fit: cover;
+//         }
 
-        .song-details {
-          .song-title {
-            font-weight: 500;
-            color: $text-color;
-            margin: 0 0 0.25rem 0;
-          }
+//         .song-details {
+//           .song-title {
+//             font-weight: 500;
+//             color: $text-color;
+//             margin: 0 0 0.25rem 0;
+//           }
 
-          .song-artist {
-            font-size: 0.9rem;
-            color: $text-secondary;
-            margin: 0 0 0.125rem 0;
-          }
+//           .song-artist {
+//             font-size: 0.9rem;
+//             color: $text-secondary;
+//             margin: 0 0 0.125rem 0;
+//           }
 
-          .song-album {
-            font-size: 0.8rem;
-            color: $text-muted;
-            margin: 0;
-          }
-        }
-      }
+//           .song-album {
+//             font-size: 0.8rem;
+//             color: $text-muted;
+//             margin: 0;
+//           }
+//         }
+//       }
 
-      .remove-button {
-        background: none;
-        border: none;
-        color: $text-secondary;
-        font-size: 1.5rem;
-        cursor: pointer;
-        opacity: 0;
-        padding: 0.5rem;
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.2s ease;
+//       .remove-button {
+//         background: none;
+//         border: none;
+//         color: $text-secondary;
+//         font-size: 1.5rem;
+//         cursor: pointer;
+//         opacity: 0;
+//         padding: 0.5rem;
+//         border-radius: 50%;
+//         width: 40px;
+//         height: 40px;
+//         display: flex;
+//         align-items: center;
+//         justify-content: center;
+//         transition: all 0.2s ease;
 
-        &:hover {
-          background-color: rgba(255, 107, 107, 0.1);
-          color: #ff6b6b;
-        }
+//         &:hover {
+//           background-color: rgba(255, 107, 107, 0.1);
+//           color: #ff6b6b;
+//         }
 
-        &.removing {
-          color: $text-muted;
-          cursor: not-allowed;
+//         &.removing {
+//           color: $text-muted;
+//           cursor: not-allowed;
 
-          &:hover {
-            background-color: transparent;
-            color: $text-muted;
-          }
-        }
-      }
-    }
-  }
-}
+//           &:hover {
+//             background-color: transparent;
+//             color: $text-muted;
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
 
-// Responsive design
-@media (max-width: 768px) {
-  .playlist-detail {
-    .playlist-header {
-      .playlist-info h1 {
-        font-size: 1.5rem;
-      }
-    }
+// // Responsive design
+// @media (max-width: 768px) {
+//   .playlist-detail {
+//     .playlist-header {
+//       .playlist-info h1 {
+//         font-size: 1.5rem;
+//       }
+//     }
 
-    .songs-list .song-item {
-      padding: 0.5rem;
-      gap: 0.75rem;
+//     .songs-list .song-item {
+//       padding: 0.5rem;
+//       gap: 0.75rem;
 
-      .song-image {
-        width: 40px;
-        height: 40px;
-      }
+//       .song-image {
+//         width: 40px;
+//         height: 40px;
+//       }
 
-      .song-info {
-        .song-title {
-          font-size: 0.9rem;
-        }
+//       .song-info {
+//         .song-title {
+//           font-size: 0.9rem;
+//         }
 
-        .song-artist,
-        .song-album {
-          font-size: 0.8rem;
-        }
-      }
-    }
-  }
-}
+//         .song-artist,
+//         .song-album {
+//           font-size: 0.8rem;
+//         }
+//       }
+//     }
+//   }
+// }

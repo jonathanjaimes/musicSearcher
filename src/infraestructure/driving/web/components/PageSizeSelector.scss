@@ -1,0 +1,57 @@
+@use '../styles/variables' as *;
+
+.page-size-selector {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+
+  .page-size-label {
+    color: $text-secondary;
+    font-weight: 500;
+  }
+
+  .page-size-select {
+    background-color: $card-bg;
+    color: $text-color;
+    border: 1px solid $border-color;
+    border-radius: $border-radius;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      border-color: $primary-color;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+      box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+    }
+
+    option {
+      background-color: $card-bg;
+      color: $text-color;
+    }
+  }
+
+  .total-items {
+    color: $text-muted;
+    font-size: 0.85rem;
+  }
+
+  // Responsive
+  @media (max-width: $mobile) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+
+    .page-size-select {
+      width: 100%;
+      padding: 0.6rem 0.75rem;
+    }
+  }
+}

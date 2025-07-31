@@ -4,9 +4,9 @@ import { usePlaylist } from "../hooks/usePlaylist";
 import { useSearchForm } from "../hooks/useSearchForm";
 import { usePlaylistModal } from "../hooks/usePlaylistModal";
 import { usePlaylistActions } from "../hooks/usePlaylistActions";
-import SearchForm from "../components/SearchForm";
-import SearchResults from "../components/SearchResults";
-import PlaylistModal from "../components/PlaylistModal";
+import SearchForm from "../components/search/SearchForm";
+import SearchResults from "../components/search/SearchResults";
+import PlaylistModal from "../components/playlist/PlaylistModal";
 import "./SearchPage.scss";
 
 const SearchPage: React.FC = () => {
@@ -38,6 +38,7 @@ const SearchPage: React.FC = () => {
 
       <SearchResults
         songs={songs}
+        playlists={playlists}
         loading={loading}
         error={error}
         searchTerm={searchTerm}
