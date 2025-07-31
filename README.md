@@ -257,5 +257,3 @@ export default tseslint.config([
   },
 ]);
 ```
-
-# musicSearcher
