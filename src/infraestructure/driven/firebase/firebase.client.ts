@@ -19,14 +19,30 @@ import type { Playlist } from "../../../core/playlist/domain/models/playlist";
 import type { Song } from "../../../core/search/domain/models/song";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBTkENf0gEuMdU9H8wjd6D0PAqRuLCZLR4",
-  authDomain: "music-searcher-12a48.firebaseapp.com",
-  projectId: "music-searcher-12a48",
-  storageBucket: "music-searcher-12a48.firebasestorage.app",
-  messagingSenderId: "83307062873",
-  appId: "1:83307062873:web:9db8b812522d0ed00fb348",
-  measurementId: "G-YPWYMLPLGV",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
+
+// Validar que todas las variables de entorno estén configuradas
+const requiredEnvVars = [
+  'VITE_FIREBASE_API_KEY',
+  'VITE_FIREBASE_AUTH_DOMAIN', 
+  'VITE_FIREBASE_PROJECT_ID',
+  'VITE_FIREBASE_STORAGE_BUCKET',
+  'VITE_FIREBASE_MESSAGING_SENDER_ID',
+  'VITE_FIREBASE_APP_ID'
+];
+
+for (const envVar of requiredEnvVars) {
+  if (!import.meta.env[envVar]) {
+    throw new Error(`La variable de entorno ${envVar} es requerida`);
+  }
+}
 
 export class FirebaseClient {
   private app: FirebaseApp;

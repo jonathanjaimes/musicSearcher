@@ -1,5 +1,9 @@
-const SPOTIFY_CLIENT_ID = "61e7c2cc7312413eace05c8711413fc9";
-const SPOTIFY_CLIENT_SECRET = "2b1e43341d34432d972f05ccb7776a2e";
+const SPOTIFY_CLIENT_ID = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
+const SPOTIFY_CLIENT_SECRET = import.meta.env.VITE_SPOTIFY_CLIENT_SECRET;
+
+if (!SPOTIFY_CLIENT_ID || !SPOTIFY_CLIENT_SECRET) {
+  throw new Error('Las variables de entorno VITE_SPOTIFY_CLIENT_ID y VITE_SPOTIFY_CLIENT_SECRET son requeridas');
+}
 
 export class SpotifyClient {
   private authToken: string | null = null;
