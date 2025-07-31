@@ -13,7 +13,6 @@ import ErrorState from "../components/ErrorState";
 import "./MyPlaylistPage.scss";
 
 const MyPlaylistPage: React.FC = () => {
-  // Hook principal para datos de playlists
   const {
     playlists,
     loading,
@@ -24,11 +23,9 @@ const MyPlaylistPage: React.FC = () => {
     loadPlaylists,
   } = usePlaylist();
 
-  // Hook para navegación entre vistas
   const { selectedPlaylist, selectPlaylist, backToList, setSelectedPlaylist } =
     usePlaylistNavigation(playlists);
 
-  // Hook para formulario de creación
   const {
     showCreateForm,
     newPlaylistName,
@@ -39,7 +36,6 @@ const MyPlaylistPage: React.FC = () => {
     updateName,
   } = usePlaylistForm(createPlaylist);
 
-  // Hook para eliminación de playlists
   const {
     deletingPlaylistId,
     showDeleteModal,
@@ -49,19 +45,16 @@ const MyPlaylistPage: React.FC = () => {
     confirmDelete,
     cancelDelete,
   } = usePlaylistDelete(deletePlaylist, (playlistId) => {
-    // Si la playlist eliminada era la seleccionada, volver a la lista
     if (selectedPlaylist && selectedPlaylist.id === playlistId) {
       setSelectedPlaylist(null);
     }
   });
 
-  // Hook para eliminación de canciones
   const { removingSongId, handleRemoveSong } = useSongRemoval(
     removeSongFromPlaylist,
     selectedPlaylist
   );
 
-  // Estados de carga y error
   if (loading) {
     return (
       <div className="my-playlist-page">
@@ -82,7 +75,6 @@ const MyPlaylistPage: React.FC = () => {
     );
   }
 
-  // Vista de detalle de playlist
   if (selectedPlaylist) {
     return (
       <div className="my-playlist-page">
@@ -96,7 +88,6 @@ const MyPlaylistPage: React.FC = () => {
     );
   }
 
-  // Vista principal con lista de playlists
   return (
     <div className="my-playlist-page">
       <div className="page-header">

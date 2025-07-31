@@ -6,7 +6,6 @@ export const usePlaylistNavigation = (playlists: Playlist[]) => {
     null
   );
 
-  // Sincronizar la playlist seleccionada cuando se actualice el estado global
   useEffect(() => {
     if (selectedPlaylist) {
       const updatedPlaylist = playlists.find(
@@ -30,6 +29,6 @@ export const usePlaylistNavigation = (playlists: Playlist[]) => {
     selectedPlaylist,
     selectPlaylist,
     backToList,
-    setSelectedPlaylist, // Para casos especiales como eliminar playlist
+    setSelectedPlaylist,
   };
 };

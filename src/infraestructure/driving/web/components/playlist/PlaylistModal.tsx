@@ -1,191 +1,200 @@
-// import React, { useState, useEffect } from "react";
-// import type { Song } from "../../../../../core/search/domain/models/song";
-// import type { Playlist } from "../../../../../core/playlist/domain/models/playlist";
-// import "./PlaylistModal.scss";
+import React, { useState, useEffect } from "react";
+import type { Song } from "../../../../../core/search/domain/models/song";
+import type { Playlist } from "../../../../../core/playlist/domain/models/playlist";
+import "./PlaylistModal.scss";
 
-// interface PlaylistModalProps {
-//   isOpen: boolean;
-//   onClose: () => void;
-//   song: Song | null;
-//   playlists: Playlist[];
-//   onCreatePlaylist: (name: string) => Promise<void>;
-//   onAddSongToPlaylist: (playlistId: string, song: Song) => Promise<void>;
-//   isLoading: boolean;
-// }
+interface PlaylistModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  song: Song | null;
+  playlists: Playlist[];
+  onCreatePlaylist: (name: string) => Promise<void>;
+  onAddSongToPlaylist: (playlistId: string, song: Song) => Promise<void>;
+  isLoading: boolean;
+}
 
-// const PlaylistModal: React.FC<PlaylistModalProps> = ({
-//   isOpen,
-//   onClose,
-//   song,
-//   playlists,
-//   onCreatePlaylist,
-//   onAddSongToPlaylist,
-//   isLoading,
-// }) => {
-//   const [selectedPlaylistId, setSelectedPlaylistId] = useState<string>("");
-//   const [newPlaylistName, setNewPlaylistName] = useState("");
-//   const [showCreateForm, setShowCreateForm] = useState(false);
-//   const [error, setError] = useState<string>("");
+const PlaylistModal: React.FC<PlaylistModalProps> = ({
+  isOpen,
+  onClose,
+  song,
+  playlists,
+  onCreatePlaylist,
+  onAddSongToPlaylist,
+  isLoading,
+}) => {
+  const [showCreateForm, setShowCreateForm] = useState(false);
+  const [newPlaylistName, setNewPlaylistName] = useState("");
+  const [selectedPlaylistId, setSelectedPlaylistId] = useState<string>("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-//   useEffect(() => {
-//     if (isOpen) {
-//       setSelectedPlaylistId("");
-//       setNewPlaylistName("");
-//       setShowCreateForm(false);
-//       setError("");
-//     }
-//   }, [isOpen]);
+  useEffect(() => {
+    if (isOpen) {
+      setShowCreateForm(playlists.length === 0);
+      setNewPlaylistName("");
+      setSelectedPlaylistId("");
+      setIsSubmitting(false);
+    }
+  }, [isOpen, playlists.length]);
 
-//   if (!isOpen || !song) return null;
+  const handleCreatePlaylist = async (playlistName: string): Promise<void> => {
+    if (!playlistName.trim()) {
+      throw new Error("El nombre de la playlist no puede estar vacío");
+    }
 
-//   const handleOverlayClick = (e: React.MouseEvent) => {
-//     if (e.target === e.currentTarget) {
-//       onClose();
-//     }
-//   };
+    try {
+      await onCreatePlaylist(playlistName.trim());
+    } catch (error) {
+      console.error("Error creating playlist:", error);
+      throw error;
+    }
+  };
 
-//   const handleAddToExistingPlaylist = async () => {
-//     if (!selectedPlaylistId || !song) return;
+  const handleAddToPlaylist = async () => {
+    if (!selectedPlaylistId || !song) return;
 
-//     try {
-//       setError("");
-//       await onAddSongToPlaylist(selectedPlaylistId, song);
-//       onClose();
-//     } catch (err) {
-//       setError("Error al agregar la canción a la playlist");
-//     }
-//   };
+    setIsSubmitting(true);
+    try {
+      await onAddSongToPlaylist(selectedPlaylistId, song);
+      onClose();
+    } catch (error) {
+      console.error("Error adding song to playlist:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
-//   const handleCreateAndAdd = async (e: React.FormEvent) => {
-//     e.preventDefault();
-//     if (!newPlaylistName.trim() || !song) return;
+  const handleAddToNewPlaylist = async () => {
+    if (!newPlaylistName.trim() || !song) return;
 
-//     try {
-//       setError("");
-//       await onCreatePlaylist(newPlaylistName.trim());
-//       onClose();
-//     } catch (err) {
-//       setError("Error al crear la playlist");
-//     }
-//   };
+    setIsSubmitting(true);
+    try {
+      // Crear la playlist usando la función separada
+      await handleCreatePlaylist(newPlaylistName);
 
-//   const songAlreadyInPlaylist = (playlist: Playlist): boolean => {
-//     return playlist.songs?.some((s) => s.id === song.id) || false;
-//   };
+      // Nota: Como onCreatePlaylist no retorna la playlist creada,
+      // cerramos el modal y el hook usePlaylist se encargará de actualizar
+      // la lista de playlists automáticamente
 
-//   return (
-//     <div className="modal-overlay" onClick={handleOverlayClick}>
-//       <div className="modal-content">
-//         <div className="modal-header">
-//           <h2>Agregar a una lista</h2>
-//           <button className="close-button" onClick={onClose}>
-//             ×
-//           </button>
-//         </div>
+      setNewPlaylistName("");
+      setShowCreateForm(false);
+      onClose();
+    } catch (error) {
+      console.error("Error creating playlist and adding song:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
-//         <div className="song-preview">
-//           <img src={song.imageUrl} alt={song.title} className="song-image" />
-//           <div className="song-info">
-//             <h3>{song.title}</h3>
-//             <p>{song.artist}</p>
-//           </div>
-//         </div>
+  if (!isOpen || !song) return null;
 
-//         {error && <div className="error-message">{error}</div>}
+  return (
+    <div className="playlist-modal-overlay" onClick={onClose}>
+      <div className="playlist-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="modal-header">
+          <h2>Agregar a lista de reproducción</h2>
+          <button className="close-button" onClick={onClose}>
+            ×
+          </button>
+        </div>
 
-//         <div className="modal-body">
-//           {!showCreateForm ? (
-//             <>
-//               <div className="playlists-section">
-//                 <h3>Seleccionar lista existente:</h3>
-//                 <div className="playlists-list">
-//                   {playlists.length === 0 ? (
-//                     <p className="no-playlists">
-//                       No tienes listas de reproducción aún
-//                     </p>
-//                   ) : (
-//                     playlists.map((playlist) => {
-//                       const alreadyAdded = songAlreadyInPlaylist(playlist);
-//                       return (
-//                         <div
-//                           key={playlist.id}
-//                           className={`playlist-item ${
-//                             selectedPlaylistId === playlist.id ? "selected" : ""
-//                           } ${alreadyAdded ? "disabled" : ""}`}
-//                           onClick={() => {
-//                             if (!alreadyAdded) {
-//                               setSelectedPlaylistId(playlist.id);
-//                             }
-//                           }}
-//                         >
-//                           <span className="playlist-name">{playlist.name}</span>
-//                           <span className="song-count">
-//                             {playlist.songs?.length || 0} canciones
-//                           </span>
-//                           {alreadyAdded && (
-//                             <span className="already-added">Ya agregada</span>
-//                           )}
-//                         </div>
-//                       );
-//                     })
-//                   )}
-//                 </div>
-//               </div>
+        <div className="modal-content">
+          <div className="song-preview">
+            <img src={song.imageUrl} alt={song.title} className="song-image" />
+            <div className="song-info">
+              <h3>{song.title}</h3>
+              <p>{song.artist}</p>
+            </div>
+          </div>
 
-//               <div className="modal-actions">
-//                 <button
-//                   className="add-button"
-//                   onClick={handleAddToExistingPlaylist}
-//                   disabled={!selectedPlaylistId || isLoading}
-//                 >
-//                   {isLoading ? "Agregando..." : "Agregar a lista"}
-//                 </button>
-//                 <button
-//                   className="create-new-button"
-//                   onClick={() => setShowCreateForm(true)}
-//                   disabled={isLoading}
-//                 >
-//                   Crear nueva lista
-//                 </button>
-//               </div>
-//             </>
-//           ) : (
-//             <div className="create-playlist-section">
-//               <h3>Crear nueva lista:</h3>
-//               <form onSubmit={handleCreateAndAdd}>
-//                 <input
-//                   type="text"
-//                   placeholder="Nombre de la nueva lista"
-//                   value={newPlaylistName}
-//                   onChange={(e) => setNewPlaylistName(e.target.value)}
-//                   className="playlist-name-input"
-//                   maxLength={50}
-//                   autoFocus
-//                 />
-//                 <div className="form-actions">
-//                   <button
-//                     type="submit"
-//                     className="create-button"
-//                     disabled={!newPlaylistName.trim() || isLoading}
-//                   >
-//                     {isLoading ? "Creando..." : "Crear y agregar"}
-//                   </button>
-//                   <button
-//                     type="button"
-//                     className="back-button"
-//                     onClick={() => setShowCreateForm(false)}
-//                     disabled={isLoading}
-//                   >
-//                     Volver
-//                   </button>
-//                 </div>
-//               </form>
-//             </div>
-//           )}
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
+          {isLoading ? (
+            <div className="loading-state">
+              <p>Cargando listas de reproducción...</p>
+            </div>
+          ) : (
+            <div className="playlist-options">
+              {playlists.length > 0 && !showCreateForm && (
+                <div className="existing-playlists">
+                  <h4>Selecciona una lista existente:</h4>
+                  <div className="playlist-list">
+                    {playlists.map((playlist) => (
+                      <div
+                        key={playlist.id}
+                        className={`playlist-item ${
+                          selectedPlaylistId === playlist.id ? "selected" : ""
+                        }`}
+                        onClick={() => setSelectedPlaylistId(playlist.id)}
+                      >
+                        <div className="playlist-info">
+                          <span className="playlist-name">{playlist.name}</span>
+                          <span className="song-count">
+                            {playlist.songs.length} canción
+                            {playlist.songs.length !== 1 ? "es" : ""}
+                          </span>
+                        </div>
+                        <div className="radio-indicator">
+                          {selectedPlaylistId === playlist.id && "✓"}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <button
+                    className="add-to-existing-button"
+                    onClick={handleAddToPlaylist}
+                    disabled={!selectedPlaylistId || isSubmitting}
+                  >
+                    {isSubmitting
+                      ? "Agregando..."
+                      : "Agregar a lista seleccionada"}
+                  </button>
+                </div>
+              )}
 
-// export default PlaylistModal;
+              {showCreateForm ? (
+                <div className="create-playlist-form">
+                  <h4>Crear nueva lista de reproducción:</h4>
+                  <input
+                    type="text"
+                    placeholder="Nombre de la lista de reproducción"
+                    value={newPlaylistName}
+                    onChange={(e) => setNewPlaylistName(e.target.value)}
+                    className="playlist-name-input"
+                    maxLength={50}
+                  />
+                  <div className="form-actions">
+                    <button
+                      className="create-and-add-button"
+                      onClick={handleAddToNewPlaylist}
+                      disabled={!newPlaylistName.trim() || isSubmitting}
+                    >
+                      {isSubmitting
+                        ? "Creando..."
+                        : "Crear lista y agregar canción"}
+                    </button>
+                    {playlists.length > 0 && (
+                      <button
+                        className="cancel-create-button"
+                        onClick={() => setShowCreateForm(false)}
+                        disabled={isSubmitting}
+                      >
+                        Cancelar
+                      </button>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                <button
+                  className="show-create-form-button"
+                  onClick={() => setShowCreateForm(true)}
+                >
+                  + Crear nueva lista de reproducción
+                </button>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default PlaylistModal;

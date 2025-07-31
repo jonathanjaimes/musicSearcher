@@ -10,7 +10,6 @@ import PlaylistModal from "../components/playlist/PlaylistModal";
 import "./SearchPage.scss";
 
 const SearchPage: React.FC = () => {
-  // Custom hooks
   const { songs, performSearch, loading, error } = useSearch();
   const {
     playlists,
